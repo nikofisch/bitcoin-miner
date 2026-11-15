@@ -1,0 +1,39 @@
+# Quartus build output — regenerated on every compile, don't commit
+quartus/db/
+quartus/incremental_db/
+quartus/output_files/
+quartus/simulation/
+quartus/greybox_tmp/
+quartus/*.rpt
+quartus/*.summary
+quartus/*.smsg
+quartus/*.done
+quartus/*.qws
+quartus/*.pin
+quartus/*.jdi
+quartus/*.sld
+quartus/*.qarlog
+quartus/*.cdf
+quartus/c5_pin_model_dump.txt
+
+# Programming files — rebuilt from source, don't commit
+quartus/*.sof
+quartus/*.pof
+quartus/*.rbf
+quartus/*.svf
+quartus/*.jam
+
+# Icarus Verilog / simulation artifacts
+*.out
+*.vcd
+*.lxt
+*.lxt2
+
+# Python
+__pycache__/
+*.pyc
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.swp
