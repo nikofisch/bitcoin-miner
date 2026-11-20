@@ -1,0 +1,110 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d//VSRV1/A.Homes$$/fischme1/Downloads/bitcoin-miner/rtl
+vsha256_core
+Z1 !s110 1795143150
+!i10b 1
+!s100 Q:dOGdF<8MQXEPCD6JTgh3
+I[8CB>W4iB[Ri9LhVFaPHj0
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+R0
+Z3 w1795141925
+Z4 8sha256_core.v
+Z5 Fsha256_core.v
+L0 5
+Z6 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z7 !s108 1795143149.000000
+Z8 !s107 sha256_core.v|
+Z9 !s90 -reportprogress|300|sha256_core.v|
+!i113 1
+Z10 tCvgOpt 0
+vsha256_iv
+R1
+!i10b 1
+!s100 J1XYIm=kj>_4XT;;Lee2Y3
+InAOaE[C6jddFn=zz;1Yil1
+R2
+R0
+R3
+R4
+R5
+L0 130
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 1
+R10
+vsha256_uart_top
+!s110 1795143152
+!i10b 1
+!s100 V_4V9KHE^7[]45KmHd`Th2
+I]4mekGMeVnFaEHhTjZfUQ0
+R2
+R0
+w1795136886
+8sha256_uart_top.v
+Fsha256_uart_top.v
+L0 6
+R6
+r1
+!s85 0
+31
+!s108 1795143151.000000
+!s107 sha256_uart_top.v|
+!s90 -reportprogress|300|sha256_uart_top.v|
+!i113 1
+R10
+vuart_rx
+Z11 !s110 1795143151
+!i10b 1
+!s100 :l1_Q^lV0b^NN;C<^15B`0
+IVXQMhFW;j]m8>Y4IWnneo0
+R2
+R0
+Z12 w1795136851
+Z13 8uart.v
+Z14 Fuart.v
+L0 3
+R6
+r1
+!s85 0
+31
+Z15 !s108 1795143150.000000
+Z16 !s107 uart.v|
+Z17 !s90 -reportprogress|300|uart.v|
+!i113 1
+R10
+vuart_tx
+R11
+!i10b 1
+!s100 del73l3m=`=8VX^9L6@@c3
+InhHz=[WnlCgZCHGELioc]3
+R2
+R0
+R12
+R13
+R14
+L0 65
+R6
+r1
+!s85 0
+31
+R15
+R16
+R17
+!i113 1
+R10

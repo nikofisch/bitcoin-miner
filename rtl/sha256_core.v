@@ -48,7 +48,7 @@ module sha256_core (
 	 
     function [31:0] sig1;
         input [31:0] x;
-		  
+			
         begin sig1=rotr(x,17)^rotr(x,19)^(x>>10); end
     endfunction
 	 
