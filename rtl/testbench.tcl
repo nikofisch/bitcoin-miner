@@ -5,8 +5,8 @@ vlib work
 }
 vmap work work
 
-vlog -sv sha256_core.v sha256_demo.v tb_sha256_demo.v
-vsim -voptargs = +acc work.tb_sha256_demo
+vlog -sv sha256_core.v sha256_demo.v testbench.v
+vsim -voptargs=+acc work.tb_sha256_demo
 onfinish stop
 
 add wave sim:/tb_sha256_demo/key

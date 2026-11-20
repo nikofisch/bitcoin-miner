@@ -9,57 +9,89 @@ z2
 cModel Technology
 Z0 d//VSRV1/A.Homes$$/fischme1/Downloads/bitcoin-miner/rtl
 vsha256_core
-Z1 !s110 1795143150
+Z1 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+Z2 !s110 1795146524
 !i10b 1
-!s100 Q:dOGdF<8MQXEPCD6JTgh3
-I[8CB>W4iB[Ri9LhVFaPHj0
-Z2 VDg1SIo80bB@j0V0VzS_@n1
+!s100 ]J2bj3l;OhO;?n8i0QV>;0
+IRKMOoOA;>5dQEa?=?Bk?21
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+Z4 !s105 sha256_core_v_unit
+S1
 R0
-Z3 w1795141925
-Z4 8sha256_core.v
-Z5 Fsha256_core.v
+Z5 w1795144902
+Z6 8sha256_core.v
+Z7 Fsha256_core.v
 L0 5
-Z6 OV;L;10.5b;63
+Z8 OV;L;10.5b;63
 r1
 !s85 0
 31
-Z7 !s108 1795143149.000000
-Z8 !s107 sha256_core.v|
-Z9 !s90 -reportprogress|300|sha256_core.v|
+Z9 !s108 1795146524.000000
+Z10 !s107 testbench.v|sha256_demo.v|sha256_core.v|
+Z11 !s90 -reportprogress|300|-sv|sha256_core.v|sha256_demo.v|testbench.v|
 !i113 1
-Z10 tCvgOpt 0
+o-sv
+Z12 tCvgOpt 0
+vsha256_demo
+R1
+R2
+!i10b 1
+!s100 A5IcG]`LE4j5aM52SUOKQ2
+I@SjdO];QFOK3O5MgT79552
+R3
+!s105 sha256_demo_v_unit
+S1
+R0
+w1795144376
+8sha256_demo.v
+Fsha256_demo.v
+L0 1
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 1
+o-sv
+R12
 vsha256_iv
 R1
-!i10b 1
-!s100 J1XYIm=kj>_4XT;;Lee2Y3
-InAOaE[C6jddFn=zz;1Yil1
 R2
-R0
+!i10b 1
+!s100 0K2f@[]QJ8F@J@Mi80]]b0
+Ifz6Tcko?nn`D7=[aaKzLl3
 R3
 R4
+S1
+R0
 R5
-L0 130
 R6
+R7
+L0 130
+R8
 r1
 !s85 0
 31
-R7
-R8
 R9
-!i113 1
 R10
+R11
+!i113 1
+o-sv
+R12
 vsha256_uart_top
 !s110 1795143152
 !i10b 1
 !s100 V_4V9KHE^7[]45KmHd`Th2
 I]4mekGMeVnFaEHhTjZfUQ0
-R2
+R3
 R0
 w1795136886
 8sha256_uart_top.v
 Fsha256_uart_top.v
 L0 6
-R6
+R8
 r1
 !s85 0
 31
@@ -67,44 +99,68 @@ r1
 !s107 sha256_uart_top.v|
 !s90 -reportprogress|300|sha256_uart_top.v|
 !i113 1
+R12
+vtb_sha256_demo
+R1
+!s110 1795146525
+!i10b 1
+!s100 FNAek^XigJgIgAN5EfO?]1
+I4E[CYOb=56f4@L:fieT4E3
+R3
+!s105 testbench_v_unit
+S1
+R0
+w1795144920
+8testbench.v
+Ftestbench.v
+L0 3
+R8
+r1
+!s85 0
+31
+R9
 R10
+R11
+!i113 1
+o-sv
+R12
 vuart_rx
-Z11 !s110 1795143151
+Z13 !s110 1795143151
 !i10b 1
 !s100 :l1_Q^lV0b^NN;C<^15B`0
 IVXQMhFW;j]m8>Y4IWnneo0
-R2
+R3
 R0
-Z12 w1795136851
-Z13 8uart.v
-Z14 Fuart.v
+Z14 w1795136851
+Z15 8uart.v
+Z16 Fuart.v
 L0 3
-R6
+R8
 r1
 !s85 0
 31
-Z15 !s108 1795143150.000000
-Z16 !s107 uart.v|
-Z17 !s90 -reportprogress|300|uart.v|
+Z17 !s108 1795143150.000000
+Z18 !s107 uart.v|
+Z19 !s90 -reportprogress|300|uart.v|
 !i113 1
-R10
+R12
 vuart_tx
-R11
+R13
 !i10b 1
 !s100 del73l3m=`=8VX^9L6@@c3
 InhHz=[WnlCgZCHGELioc]3
-R2
+R3
 R0
-R12
-R13
 R14
+R15
+R16
 L0 65
-R6
+R8
 r1
 !s85 0
 31
-R15
-R16
 R17
+R18
+R19
 !i113 1
-R10
+R12
