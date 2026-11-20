@@ -66,7 +66,7 @@ module sha256_core (
     endfunction
 
 	reg [31:0] w [0:63]; // The key message input which is constructed from the block
-    reg [31:0] a,b,c,d,e,f,g,h; // The eight 32-bit variables that begin as the initital state
+   reg [31:0] a,b,c,d,e,f,g,h; // The eight 32-bit variables that begin as the initital state
 	reg [255:0] hin_latched; // The starting 256-bit saved for the operation a-h
 	reg [5:0] t; // the 6 bit counter that is used to which word to compute in SCHEDULE and which round we're in which chooses K[t]
 	reg [1:0] state; // FSM state register for the four states: IDLE, SCHEDULE, ROUNDS, FINALIZE
@@ -118,7 +118,7 @@ module sha256_core (
 					w[t] <= sig1(w[t - 2]) + w[t - 7] + sig0(w[t - 15]) + w[t - 16]; // Every word from 16 to 64 is computed from four of the earlier words that were copied
 					if (t==63) begin t<=0; state<=ROUNDS; end // t counter gets reset to 0 to be reused in ROUNDS
                     else t<=t+1'b1;
-                end
+                endp
 				ROUNDS: begin // Formula for altering the working variables at the end of a round
                     h <= g; 
 					g <= f;

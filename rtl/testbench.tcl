@@ -14,6 +14,7 @@ add wave sim:/tb_sha256_demo/dut/start
 add wave sim:/tb_sha256_demo/dut/done
 add wave -radix hexadecimal sim:/tb_sha256_demo/dut/hash
 add wave -radix binary sim:/tb_sha256_demo/leds
+add wave sim:/tb_sha256_demo/clk
 
 run -all
 wave zoom full

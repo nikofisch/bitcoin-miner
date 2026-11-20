@@ -10,15 +10,15 @@ cModel Technology
 Z0 d//VSRV1/A.Homes$$/fischme1/Downloads/bitcoin-miner/rtl
 vsha256_core
 Z1 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
-Z2 !s110 1795146524
+Z2 !s110 1795199555
 !i10b 1
-!s100 ]J2bj3l;OhO;?n8i0QV>;0
-IRKMOoOA;>5dQEa?=?Bk?21
+!s100 hjmebNhhh3P01j07d<5gM3
+IJT?ZJX8K@2GfJc_m78T4]2
 Z3 VDg1SIo80bB@j0V0VzS_@n1
 Z4 !s105 sha256_core_v_unit
 S1
 R0
-Z5 w1795144902
+Z5 w1795198009
 Z6 8sha256_core.v
 Z7 Fsha256_core.v
 L0 5
@@ -26,7 +26,7 @@ Z8 OV;L;10.5b;63
 r1
 !s85 0
 31
-Z9 !s108 1795146524.000000
+Z9 !s108 1795199555.000000
 Z10 !s107 testbench.v|sha256_demo.v|sha256_core.v|
 Z11 !s90 -reportprogress|300|-sv|sha256_core.v|sha256_demo.v|testbench.v|
 !i113 1
@@ -36,16 +36,16 @@ vsha256_demo
 R1
 R2
 !i10b 1
-!s100 A5IcG]`LE4j5aM52SUOKQ2
-I@SjdO];QFOK3O5MgT79552
+!s100 3Gki5CND75i0lN_V=h`:]2
+IYSRHhl:MFjH_gB^=VYPXQ3
 R3
 !s105 sha256_demo_v_unit
 S1
 R0
-w1795144376
+w1795198344
 8sha256_demo.v
 Fsha256_demo.v
-L0 1
+L0 4
 R8
 r1
 !s85 0
@@ -60,8 +60,8 @@ vsha256_iv
 R1
 R2
 !i10b 1
-!s100 0K2f@[]QJ8F@J@Mi80]]b0
-Ifz6Tcko?nn`D7=[aaKzLl3
+!s100 fd?1_zWmS<:5ZK[>Je:fd2
+ILEQ6cBef3GV;<W_F2gQ?d3
 R3
 R4
 S1
@@ -69,7 +69,7 @@ R0
 R5
 R6
 R7
-L0 130
+L0 146
 R8
 r1
 !s85 0
@@ -102,15 +102,15 @@ r1
 R12
 vtb_sha256_demo
 R1
-!s110 1795146525
+R2
 !i10b 1
-!s100 FNAek^XigJgIgAN5EfO?]1
-I4E[CYOb=56f4@L:fieT4E3
+!s100 4K`S_Z2Tb>^zJXJhG63eJ2
+IE^KXSlTF<g8z;^iE2@R:n1
 R3
 !s105 testbench_v_unit
 S1
 R0
-w1795144920
+R5
 8testbench.v
 Ftestbench.v
 L0 3

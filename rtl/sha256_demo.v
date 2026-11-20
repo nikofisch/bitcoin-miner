@@ -17,7 +17,7 @@ module sha256_demo (CLOCK_50, KEY, LEDR);
 
 
     wire Clock, Reset, done;
-    wire [255:0] initial, hash;
+    wire [255:0] iv, hash;
     reg start, passed, failed;
 
     assign Clock = CLOCK_50;
@@ -25,7 +25,7 @@ module sha256_demo (CLOCK_50, KEY, LEDR);
 
     // Supply the standard SHA-256 starting values.
     sha256_iv init_values (
-        .iv(initial)
+        .iv(iv)
     );
 
     // Connect the hash core to the demo signals.
@@ -34,7 +34,7 @@ module sha256_demo (CLOCK_50, KEY, LEDR);
         .rst(Reset),
         .start(start),
         .block(PADDED_ABC),
-        .hin(initial),
+        .hin(iv),
         .hout(hash),
         .done(done),
         .busy()
