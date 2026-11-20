@@ -10,7 +10,7 @@ module sha256_core (
     output reg done, busy
 );
     reg [31:0] K [0:63];
-    initial begin // 64 round constants (standard uses the cubes roots of the first 64 prime numbers)
+	initial begin // 64 round constants (standard uses the cubes roots of the first 64 prime numbers); one for each round of operations
         K[0]=32'h428a2f98; K[1]=32'h71374491; K[2]=32'hb5c0fbcf; K[3]=32'he9b5dba5;
         K[4]=32'h3956c25b; K[5]=32'h59f111f1; K[6]=32'h923f82a4; K[7]=32'hab1c5ed5;
         K[8]=32'hd807aa98; K[9]=32'h12835b01; K[10]=32'h243185be; K[11]=32'h550c7dc3;
@@ -32,96 +32,112 @@ module sha256_core (
 	 // Rotate right operation
 	 // Requires >> wiring rotation and not a shift register because it depnds on the clock cycle and costs extra logic
     function [31:0] rotr;
-        input [31:0] x; input integer n;
+        input [31:0] x; 
+		input integer n; // integer keyword declares 32-bit integer parameter for n
 		  
-        begin rotr = (x>>n)|(x<<(32-n)); end // x >> n moves bits of x to the right by n, the final n bits fall off and zeros fill the first n bits
+		begin rotr = (x >> n) | (x << (32 - n)); end // x >> n moves bits of x to the right by n, the final n bits fall off and zeros fill the first n bits
 															// x << (32-n) moves the bits of x to the left by 32-n, the previous bits that fell are now the n positions
 															// | combines the two halves into one ince all the 1 bits replace the zeros
     endfunction
 	 
-	 // 
-    function [31:0] sig0;
+	 // The six logical functions used to create the hashing
+	function [31:0] sig0; // Lowercase sigma 0 function using the rotr and shifting operations
         input [31:0] x;
 		  
-        begin sig0=rotr(x,7)^rotr(x,18)^(x>>3); end
+		begin sig0 = rotr(x,7) ^ rotr(x,18) ^ (x>>3); end
     endfunction
 	 
-    function [31:0] sig1;
+	function [31:0] sig1; // Lowercase sigma 1 function using the rotr and shifting operations
         input [31:0] x;
 			
-        begin sig1=rotr(x,17)^rotr(x,19)^(x>>10); end
+		begin sig1 = rotr(x,17) ^ rotr(x,19) ^ (x>>10); end
     endfunction
 	 
-    function [31:0] bigsig0;
+	function [31:0] bigsig0; // Uppercase sigma 0 function using the rotr operation
         input [31:0] x;
 		  
-        begin bigsig0=rotr(x,2)^rotr(x,13)^rotr(x,22); end
+		begin bigsig0 = rotr(x,2) ^ rotr(x,13) ^ rotr(x,22); end
     endfunction
 	 
-    function [31:0] bigsig1;
+	function [31:0] bigsig1; // Uppercase sigma 1 function using the rotr operation
         input [31:0] x;
 		  
-        begin bigsig1=rotr(x,6)^rotr(x,11)^rotr(x,25); end
+		begin bigsig1 = rotr(x,6) ^ rotr(x,11) ^ rotr(x,25); end
     endfunction
 
-    reg [31:0] w [0:63];
+	reg [31:0] w [0:63]; // The key message input which is constructed from the block
     reg [31:0] a,b,c,d,e,f,g,h; // The eight 32-bit variables that begin as the initital state
-    reg [255:0] hin_latched;
-    reg [5:0] t;
-    reg [1:0] state;
+	reg [255:0] hin_latched; // The starting 256-bit saved for the operation a-h
+	reg [5:0] t; // the 6 bit counter that is used to which word to compute in SCHEDULE and which round we're in which chooses K[t]
+	reg [1:0] state; // FSM state register for the four states: IDLE, SCHEDULE, ROUNDS, FINALIZE
 	 
     localparam IDLE=0, SCHEDULE=1, ROUNDS=2, FINALIZE=3;
     integer i;
 
-	 // Heart of the hashing process
-    wire [31:0] choose = (e & f) ^ ((~e) & g);
-    wire [31:0] majority = (a & b) ^ (a & c) ^ (b & c);
+	wire [31:0] choose = (e & f) ^ ((~e) & g); // Choose function to create temporary word 1
+	wire [31:0] majority = (a & b) ^ (a & c) ^ (b & c); // Majority function to create temporary word 2
+
+	// Additional parameters depending on the message w[t] which constantly changes
     wire [31:0] t1 = h + bigsig1(e) + choose + K[t] + w[t]; // Temporary word 1; used to compute e = d + t1
     wire [31:0] t2 = bigsig0(a) + majority; // Temporary word 2; used to compute a = t1 + t2
 	 
-    // Each digest word is added modulo 2^32.
-    wire [31:0] o0=hin_latched[255:224]+a;
-    wire [31:0] o1=hin_latched[223:192]+b;
-    wire [31:0] o2=hin_latched[191:160]+c;
-    wire [31:0] o3=hin_latched[159:128]+d;
-    wire [31:0] o4=hin_latched[127:96]+e;
-    wire [31:0] o5=hin_latched[95:64]+f;
-    wire [31:0] o6=hin_latched[63:32]+g;
-    wire [31:0] o7=hin_latched[31:0]+h;
+    // Final output hash after the 64 rounds of scrambling between a-h
+	wire [31:0] o0 = hin_latched[255:224] + a;
+	wire [31:0] o1 = hin_latched[223:192] + b;
+	wire [31:0] o2 = hin_latched[191:160] + c;
+	wire [31:0] o3 = hin_latched[159:128] + d;
+	wire [31:0] o4 = hin_latched[127:96] + e;
+	wire [31:0] o5 = hin_latched[95:64] + f;
+	wire [31:0] o6 = hin_latched[63:32] + g;
+	wire [31:0] o7 = hin_latched[31:0] + h;
 
     always @(posedge clk) begin
         if (rst) begin
             state<=IDLE; busy<=0; done<=0; hout<=0; t<=0;
             hin_latched<=0;
-            a<=0;b<=0;c<=0;d<=0;e<=0;f<=0;g<=0;h<=0;
+            a <= 0;
+			b <= 0;
+			c <= 0;
+			d <= 0;
+			e <= 0;
+			f <= 0;
+			g <= 0;
+			h <= 0;
             // Schedule entries are written before use; no reset required.
         end else begin
             done<=0;
             case (state)
                 IDLE: if (start) begin
-                    hin_latched<=hin;
-                    {a,b,c,d,e,f,g,h}<=hin;
-                    for (i=0;i<16;i=i+1)
-                        w[i]<=block[511-i*32 -:32];
-                    t<=16;busy<=1;state<=SCHEDULE;
+                    hin_latched <= hin; // Storing a copy of the 256-bit starting state
+					{a,b,c,d,e,f,g,h} <= hin; // Assign the starting state to the eight 32-bit working variables
+					for (i = 0; i < 16; i = i + 1)
+						w[i] <= block[511-i*32 -:32]; // The first 16 words are copied directly from the block using the part selecting block[start -: width]
+                    t <= 16; busy <= 1; state <= SCHEDULE;
                 end
                 SCHEDULE: begin
-                    // Previous schedule entries were computed on earlier clocks.
-                    w[t]<=sig1(w[t-2])+w[t-7]+sig0(w[t-15])+w[t-16];
-                    if (t==63) begin t<=0;state<=ROUNDS;end
+					w[t] <= sig1(w[t - 2]) + w[t - 7] + sig0(w[t - 15]) + w[t - 16]; // Every word from 16 to 64 is computed from four of the earlier words that were copied
+					if (t==63) begin t<=0; state<=ROUNDS; end // t counter gets reset to 0 to be reused in ROUNDS
                     else t<=t+1'b1;
                 end
-                ROUNDS: begin
-                    h<=g;g<=f;f<=e;e<=d+t1; // h shifts to g, g
-                    d<=c;c<=b;b<=a;a<=t1+t2;
-                    if (t==63) state<=FINALIZE;
-                    else t<=t+1'b1;
+				ROUNDS: begin // Formula for altering the working variables at the end of a round
+                    h <= g; 
+					g <= f;
+					f <= e;
+					e <= d + t1;
+                    d <= c;
+					c <= b;
+					b <= a;
+					a <= t1 + t2;
+					if (t==63) state<=FINALIZE; // If 64 rounds have been completed, exit
+                    else t<=t+1'b1; // Next round if not reached 64 rounds
                 end
                 FINALIZE: begin
-                    hout<={o0,o1,o2,o3,o4,o5,o6,o7};
-                    busy<=0;done<=1;state<=IDLE;
+					hout <= {o0,o1,o2,o3,o4,o5,o6,o7}; // Output the final hash
+                    busy <= 0;
+					done <= 1;
+					state <= IDLE; // Reset the states
                 end
-                default:begin state<=IDLE;busy<=0;end
+                default:begin state<=IDLE;busy<=0; end
             endcase
         end
     end
