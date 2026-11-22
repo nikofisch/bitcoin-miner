@@ -118,7 +118,7 @@ module sha256_core (
 					w[t] <= sig1(w[t - 2]) + w[t - 7] + sig0(w[t - 15]) + w[t - 16]; // Every word from 16 to 64 is computed from four of the earlier words that were copied
 					if (t==63) begin t<=0; state<=ROUNDS; end // t counter gets reset to 0 to be reused in ROUNDS
                     else t<=t+1'b1;
-                endp
+                end
 				ROUNDS: begin // Formula for altering the working variables at the end of a round
                     h <= g; 
 					g <= f;
