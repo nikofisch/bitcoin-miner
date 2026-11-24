@@ -1,22 +1,16 @@
-#!/usr/bin/env python3
-"""Host side of the FPGA miner.
-
-The board mines on its own and shows the nonce on HEX. When it finds one it sends
-36 bytes over UART: 4-byte nonce (big-endian) + 32-byte hash (Bitcoin display order).
-This script reads them and re-checks the hash with hashlib.
-
-  pip install pyserial
-  python miner_host.py COM5            # wait for one result
-  python miner_host.py COM5 --again 3  # then send a byte to make the board search again, 3 more times
-"""
+# imports
 import argparse, hashlib, time
 import serial
 
-# Must match the header hardcoded in top_miner.v (Bitcoin genesis block, nonce field zeroed)
+
+# genesis block + tail
 HEADER_NO_NONCE = bytes.fromhex(
     "0100000000000000000000000000000000000000000000000000000000000000000000003ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a29ab5f49ffff001d")
 
 
+
+
+# reads bytes from the fpga port until you have n bytes exactly
 def read_exact(ser, n):
     buf = b""
     while len(buf) < n:
@@ -26,33 +20,84 @@ def read_exact(ser, n):
     return buf
 
 
-def leading_zero_bits(h):
-    return 256 - int.from_bytes(h, "big").bit_length()
+
+# counts how many leading bit
+def leading_zero_bits(hash_bytes):
+
+    # total number of bits
+    total_bits = len(hash_bytes) * 8
 
 
+    # number of bytes without the 0
+    hash_number = int.from_bytes(hash_bytes, "big")
+    bits_without_leading_zeros = hash_number.bit_length()
+
+
+
+    # check difference
+    return total_bits - bits_without_leading_zeros
+
+
+
+# check fpga function
+# report sohuld be 36 bytes 4 from nonce + 32 from 
 def check(report):
+
+    # nonce from the fpga
     nonce = int.from_bytes(report[:4], "big")
+
+    # board hash
     board_hash = report[4:]
-    header = HEADER_NO_NONCE + nonce.to_bytes(4, "little")      # header stores nonce little-endian
+
+    # makes the offical header with genenisis block and tail
+    header = HEADER_NO_NONCE + nonce.to_bytes(4, "little")    
+
+    # double sha256 algo using library
     pc_hash = hashlib.sha256(hashlib.sha256(header).digest()).digest()[::-1]
     return nonce, board_hash, pc_hash
 
 
 def main():
+
+
+    # arugment parser
     ap = argparse.ArgumentParser()
     ap.add_argument("port")
     ap.add_argument("--baud", type=int, default=115200)
     ap.add_argument("--again", type=int, default=0, help="restart the board this many extra times")
     a = ap.parse_args()
 
+
+    # open serial port
     with serial.Serial(a.port, a.baud, timeout=1) as ser:
+
+
         for run in range(a.again + 1):
-            if run:
-                ser.write(b"r")                                 # any byte restarts the search
+            if run > 0:
+                ser.write(b"r")
+
+
+
             print(f"[run {run + 1}] waiting for the board to find a nonce...")
+
+
+            # start time
             t0 = time.time()
-            nonce, board_hash, pc_hash = check(read_exact(ser, 36))
-            ok = board_hash == pc_hash
+
+
+
+            report = read_exact(ser, 36)
+
+            result = check(report)
+            nonce, board_hash, pc_hash = result
+
+
+            if (board_hash == pc_hash):
+                ok = True
+            
+            else:
+                ok = False
+            
             print(f"  nonce     : {nonce} (0x{nonce:08x})   after {time.time() - t0:.1f}s")
             print(f"  board hash: {board_hash.hex()}")
             print(f"  pc hash   : {pc_hash.hex()}")
