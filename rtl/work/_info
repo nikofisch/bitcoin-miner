@@ -8,33 +8,105 @@ z2
 !i10f 100
 cModel Technology
 Z0 d//VSRV1/A.Homes$$/fischme1/Downloads/bitcoin-miner/rtl
-vsha256_core
+vhex7seg
 Z1 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
-Z2 !s110 1795199555
+Z2 !s110 1795559528
 !i10b 1
-!s100 hjmebNhhh3P01j07d<5gM3
-IJT?ZJX8K@2GfJc_m78T4]2
+!s100 59VOicG>]6jo<i58KWi;^2
+IP`4F^zKaObaakPbmNV3=i1
 Z3 VDg1SIo80bB@j0V0VzS_@n1
-Z4 !s105 sha256_core_v_unit
+Z4 !s105 nonce_counter_v_unit
 S1
 R0
-Z5 w1795198009
-Z6 8sha256_core.v
-Z7 Fsha256_core.v
-L0 5
+Z5 w1795384935
+Z6 8nonce_counter.v
+Z7 Fnonce_counter.v
+L0 37
 Z8 OV;L;10.5b;63
 r1
 !s85 0
 31
-Z9 !s108 1795199555.000000
-Z10 !s107 testbench.v|sha256_demo.v|sha256_core.v|
-Z11 !s90 -reportprogress|300|-sv|sha256_core.v|sha256_demo.v|testbench.v|
+Z9 !s108 1795559527.000000
+Z10 !s107 tb_nonce_counter.v|nonce_counter.v|
+Z11 !s90 -reportprogress|300|-sv|nonce_counter.v|tb_nonce_counter.v|
 !i113 1
 o-sv
 Z12 tCvgOpt 0
+vnonce_counter
+R1
+Z13 !s110 1795559527
+!i10b 1
+!s100 E7cNROFB@g1DB`1nQ9D9R1
+Ih>gJ2n<k47=HE;]0I4ddO0
+R3
+R4
+S1
+R0
+R5
+R6
+R7
+L0 6
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 1
+o-sv
+R12
+vnonce_display
+R1
+R13
+!i10b 1
+!s100 z6l:8^F;nLAMW@J2g<Oi[3
+Iz<QS2^Im;5P2@53IfZL132
+R3
+R4
+S1
+R0
+R5
+R6
+R7
+L0 17
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 1
+o-sv
+R12
+vsha256_core
+R1
+Z14 !s110 1795199555
+!i10b 1
+!s100 hjmebNhhh3P01j07d<5gM3
+IJT?ZJX8K@2GfJc_m78T4]2
+R3
+Z15 !s105 sha256_core_v_unit
+S1
+R0
+Z16 w1795198009
+Z17 8sha256_core.v
+Z18 Fsha256_core.v
+L0 5
+R8
+r1
+!s85 0
+31
+Z19 !s108 1795199555.000000
+Z20 !s107 testbench.v|sha256_demo.v|sha256_core.v|
+Z21 !s90 -reportprogress|300|-sv|sha256_core.v|sha256_demo.v|testbench.v|
+!i113 1
+o-sv
+R12
 vsha256_demo
 R1
-R2
+R14
 !i10b 1
 !s100 3Gki5CND75i0lN_V=h`:]2
 IYSRHhl:MFjH_gB^=VYPXQ3
@@ -50,33 +122,33 @@ R8
 r1
 !s85 0
 31
-R9
-R10
-R11
+R19
+R20
+R21
 !i113 1
 o-sv
 R12
 vsha256_iv
 R1
-R2
+R14
 !i10b 1
 !s100 fd?1_zWmS<:5ZK[>Je:fd2
 ILEQ6cBef3GV;<W_F2gQ?d3
 R3
-R4
+R15
 S1
 R0
-R5
-R6
-R7
+R16
+R17
+R18
 L0 146
 R8
 r1
 !s85 0
 31
-R9
-R10
-R11
+R19
+R20
+R21
 !i113 1
 o-sv
 R12
@@ -100,19 +172,19 @@ r1
 !s90 -reportprogress|300|sha256_uart_top.v|
 !i113 1
 R12
-vtb_sha256_demo
+vtb_nonce_counter
 R1
 R2
 !i10b 1
-!s100 4K`S_Z2Tb>^zJXJhG63eJ2
-IE^KXSlTF<g8z;^iE2@R:n1
+!s100 YblJnVaA5cTKajJ5QXHVk3
+IoZROe8N8`Xzd`GI9z06DI2
 R3
-!s105 testbench_v_unit
+!s105 tb_nonce_counter_v_unit
 S1
 R0
-R5
-8testbench.v
-Ftestbench.v
+w1795384767
+8tb_nonce_counter.v
+Ftb_nonce_counter.v
 L0 3
 R8
 r1
@@ -124,43 +196,99 @@ R11
 !i113 1
 o-sv
 R12
-vuart_rx
-Z13 !s110 1795143151
+vtb_sha256_demo
+R1
+R14
 !i10b 1
-!s100 :l1_Q^lV0b^NN;C<^15B`0
-IVXQMhFW;j]m8>Y4IWnneo0
+!s100 4K`S_Z2Tb>^zJXJhG63eJ2
+IE^KXSlTF<g8z;^iE2@R:n1
 R3
+!s105 testbench_v_unit
+S1
 R0
-Z14 w1795136851
-Z15 8uart.v
-Z16 Fuart.v
+R16
+8testbench.v
+Ftestbench.v
 L0 3
 R8
 r1
 !s85 0
 31
-Z17 !s108 1795143150.000000
-Z18 !s107 uart.v|
-Z19 !s90 -reportprogress|300|uart.v|
+R19
+R20
+R21
 !i113 1
+o-sv
 R12
-vuart_tx
-R13
+vtb_uart
+R1
+Z22 !s110 1795559111
 !i10b 1
-!s100 del73l3m=`=8VX^9L6@@c3
-InhHz=[WnlCgZCHGELioc]3
+!s100 [>9e@JWYbGdL310OA5_jh2
+IY5f=4id8C7zaEznc1ULoZ3
 R3
+!s105 tb_uart_v_unit
+S1
 R0
-R14
-R15
-R16
-L0 65
+w1795384870
+8tb_uart.v
+Ftb_uart.v
+L0 3
 R8
 r1
 !s85 0
 31
-R17
-R18
-R19
+Z23 !s108 1795559110.000000
+Z24 !s107 tb_uart.v|uart.v|
+Z25 !s90 -reportprogress|300|-sv|uart.v|tb_uart.v|
 !i113 1
+o-sv
+R12
+vuart_rx
+R1
+R22
+!i10b 1
+!s100 K?W23faIRokF0zIgG?zX@0
+I7z4fH;g8QCeZ9m61VhMFz2
+R3
+Z26 !s105 uart_v_unit
+S1
+R0
+Z27 w1795378802
+Z28 8uart.v
+Z29 Fuart.v
+L0 2
+R8
+r1
+!s85 0
+31
+R23
+R24
+R25
+!i113 1
+o-sv
+R12
+vuart_tx
+R1
+R22
+!i10b 1
+!s100 j_PU:ed=D:10TH[i1]59]0
+IOg5D_O4Aa3:E<ojhO?<[[2
+R3
+R26
+S1
+R0
+R27
+R28
+R29
+L0 105
+R8
+r1
+!s85 0
+31
+R23
+R24
+R25
+!i113 1
+o-sv
 R12
