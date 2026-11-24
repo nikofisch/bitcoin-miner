@@ -38,7 +38,7 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CSEMA5F31C6
-set_global_assignment -name TOP_LEVEL_ENTITY sha256_uart_top
+set_global_assignment -name TOP_LEVEL_ENTITY top_miner
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 18.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "16:02:08  NOVEMBER 15, 2026"
 set_global_assignment -name LAST_QUARTUS_VERSION "18.1.0 Standard Edition"
@@ -314,10 +314,6 @@ set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (Verilog)"
 set_global_assignment -name EDA_NETLIST_WRITER_OUTPUT_DIR simulation/modelsim -section_id eda_simulation
 set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "VERILOG HDL" -section_id eda_simulation
-set_global_assignment -name VERILOG_FILE "//VSRV1/A.Homes\$/fischme1/Downloads/bitcoin-miner/rtl/sha256_demo.v"
-set_global_assignment -name VERILOG_FILE ../rtl/sha256_core.v
-set_global_assignment -name VERILOG_FILE "//VSRV1/A.Homes\$/fischme1/Downloads/bitcoin-miner/rtl/uart.v"
-set_global_assignment -name VERILOG_FILE "//VSRV1/A.Homes\$/fischme1/Downloads/bitcoin-miner/rtl/sha256_uart_top.v"
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
@@ -894,4 +890,12 @@ set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to HPS_DDR3_CK_P
 set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to HPS_DDR3_CK_N
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to UART_RX
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to UART_TX
+set_global_assignment -name VERILOG_FILE "//VSRV1/A.Homes\$/fischme1/Downloads/bitcoin-miner/rtl/top_miner.v"
+set_global_assignment -name VERILOG_FILE "//VSRV1/A.Homes\$/fischme1/Downloads/bitcoin-miner/rtl/tb_nonce_counter.v"
+set_global_assignment -name VERILOG_FILE "//VSRV1/A.Homes\$/fischme1/Downloads/bitcoin-miner/rtl/tb_sha256_core.v"
+set_global_assignment -name VERILOG_FILE "//VSRV1/A.Homes\$/fischme1/Downloads/bitcoin-miner/rtl/tb_top_miner.v"
+set_global_assignment -name VERILOG_FILE "//VSRV1/A.Homes\$/fischme1/Downloads/bitcoin-miner/rtl/tb_uart.v"
+set_global_assignment -name VERILOG_FILE "//VSRV1/A.Homes\$/fischme1/Downloads/bitcoin-miner/rtl/nonce_counter.v"
+set_global_assignment -name VERILOG_FILE ../rtl/sha256_core.v
+set_global_assignment -name VERILOG_FILE "//VSRV1/A.Homes\$/fischme1/Downloads/bitcoin-miner/rtl/uart.v"
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
