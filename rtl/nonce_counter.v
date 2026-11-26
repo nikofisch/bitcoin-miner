@@ -1,45 +1,41 @@
-// nonce_counter.v
-// Everything for the nonce: the counter itself, the slowed-down display
-// register, and the 7-segment decoder. Instantiated from top_miner.v.
-
-// 32-bit nonce counter. start_val is where counting begins after reset/clear.
+// Defined ports and parameters
 module nonce_counter (clk, rst, clear, inc, start_val, nonce);
     input clk, rst, clear, inc;
     input [31:0] start_val;
-    output reg [31:0] nonce;
+	output reg [31:0] nonce; // The nonce is a 32-bit and is edited by the miner to determine a hash that meets the target value
     always @(posedge clk)
-        if (rst | clear) nonce <= start_val;
-        else if (inc)    nonce <= nonce + 1'b1;
+		if (rst | clear) nonce <= start_val; // Top-level module sets starting parameter to 32'd0
+	else if (inc)    nonce <= nonce + 1'b1; // Standard guessing method of incrementing by 1 so it doubles as a counter
 endmodule
 
-// Samples the (fast) nonce ~8 times a second so the HEX digits are readable.
-// While found is high, capture the nonce on every rising edge.
+// Sampling the nonce ~8 times a second so the HEX digits are readable as the counter updates
 module nonce_display (clk, rst, found, nonce, shown);
     input clk, rst, found;
     input [31:0] nonce;
     output reg [31:0] shown;
 
-    parameter DIV = 6_250_000;  // 50 MHz / 8 Hz.
-    reg [22:0] cnt;
-    wire tick = (cnt == DIV-1);
+    parameter DIV = 6_250_000; // 50 MHz / 8 Hz to update 8 times per second
+	reg [22:0] cnt; // 23 bits is sufficient to count the bits making up 8 seconds from CLOCK 50 cycles
+	wire tick = (cnt == DIV-1);
     always @(posedge clk)
-        if (rst) begin
+		if (rst) begin // Reset
             cnt <= 0;
             shown <= 0;
         end
         else begin
-            cnt <= tick ? 23'd0 : cnt + 1'b1;
-            if (found || tick) shown <= nonce;
+            cnt <= tick ? 23'd0 : cnt + 1'b1; // Reset cnt to 0 if 8Hz tick has passed, else increment cnt by one bit
+			if (found || tick) shown <= nonce; // Two instances where HEX updates the display of HEX: found and tick
+			// Tick updates the displays roughly 8 times a second
+			// When found is set to high, display will freeze the found nonce
         end
 endmodule
 
-// hex digit -> 7-segment, active-low, seg = {g,f,e,d,c,b,a}
 module hex7seg (d, seg);
-    input [3:0] d;
-    output reg [6:0] seg;
+	input [3:0] d; // 4 bit case for each hexadecimal value
+	output reg [6:0] seg; // hex digit is 7-segment, active-low, seg = {g,f,e,d,c,b,a}; defined in qsf
 
     always @(*) begin
-        case (d)
+		case (d) // Case values according to 7-segment decoder truth table for hexadecimal display
             4'h0: seg = 7'b1000000;
             4'h1: seg = 7'b1111001;
             4'h2: seg = 7'b0100100;
